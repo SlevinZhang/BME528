@@ -1,0 +1,8 @@
+body {-webkit-user-select: none;overflow:hidden;height:100%;background:black;}
+html{overflow:hidden;}
+#top{top:0;left:0;right:0;background:#D4D4D4; /*#EE3E64;*/}
+#accession{top:21px;left:0;height:20px;width:256px;background:#D4D4D4;/*#B7D84B;*/}
+#menuContainer{top:41px;left:0;bottom:0; width:256px;background:#D7CFAA;/*background:#D4D4D4;/*#B7D84B;*/}
+#toolbar{top:21px;left:257px;right:0;background:#D7CFAA; /*#44ACCF;*/}
+#main{top:40px;left:257px;right:0;bottom:0;background:#FFF;/*EBDE52;*/}
+#header{padding: 0.1em 0em 0.3em 0.3em;background-color:#333333;color:#FFFFFF;font-family: Verdana;letter-spacing:0.1em;font-size:10pt;}

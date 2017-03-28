@@ -1,0 +1,81 @@
+<html>
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="css/body.css" rel="stylesheet" type="text/css" />
+<body>
+<h1>
+Database Search result
+</h1>
+<h3>
+Total Numbers:
+</h3>
+<pre>
+Total Number Of <span style="font-style:italic">Patients </span> is <span style="color:red"> 328 </span>(Series status is active w/ Stroke Date)
+Total Number Of <span style="font-style:italic">Patients Who Have CT Studies </span> is <span style="color:red"> 125 </span> (Patients Who Only have CT Studies is </span> is <span style="color:red"> 83 </span>)
+Total Number Of <span style="font-style:italic">Patients Who Have MR Studies </span> is <span style="color:red"> 245 </span>(Patients Who Only have MR Studies is </span> is <span style="color:red"> 203 </span>)   
+Total Number Of <span style="font-style:italic">Studies </span> is <span style="color:red"> 1072 </span> 
+Total Number Of <span style="font-style:italic">MR Studies </span> is <span style="color:red"> 732 </span> 
+Total Number Of <span style="font-style:italic">CT Studies </span> is <span style="color:red"> 340 </span> 
+</pre>
+<table>
+<tr>
+<h3>
+Result One Histogram Result Of Stroke Date -Study Date <14 (MR)
+</h3>
+<td>
+<table class="table" id=1  style=" margin:50px" class="table"><tr><th>Stroke_Date - Study_Date</th><th>Number</th></tr><tr><td>0</td><td>110</td></tr><tr><td>1</td><td>50</td></tr><tr><td>2</td><td>18</td></tr><tr><td>3</td><td>5</td></tr><tr><td>4</td><td>3</td></tr><tr><td>5</td><td>2</td></tr><tr><td>6</td><td>3</td></tr><tr><td>7</td><td>2</td></tr><tr><td>8</td><td>1</td></tr><tr><td>10</td><td>1</td></tr><tr><td>11</td><td>2</td></tr><tr><td>12</td><td>1</td></tr></table>
+<pre style="font-weight:bold">
+              Table Description: 
+ The Above Table Is Histogram Result That 
+ Stroke Date - Study Date <14 On MR Studise
+ The Total Number Of Patients is <span style="color:red">198</span>
+</pre>
+</td>
+
+<td>
+<img src="MR_date.jpg" width="400" height="300" style=" margin:80px">
+<pre style="font-weight:bold;margin :80px;">
+              Table Histogram Result
+</pre>
+</td>
+</tr>
+<tr>
+
+<td>
+<h3>
+Result Two: Histogram Result Of Stroke Date -Study Date <14 (CT)
+</h3>
+<table class="table" id=1  style=" margin:50px"><tr><th>Stroke_Date - Study_Date</th><th>Number</th></tr><tr><td>0</td><td>51</td></tr><tr><td>1</td><td>39</td></tr><tr><td>2</td><td>14</td></tr><tr><td>3</td><td>3</td></tr><tr><td>4</td><td>4</td></tr><tr><td>5</td><td>1</td></tr><tr><td>6</td><td>2</td></tr><tr><td>7</td><td>3</td></tr><tr><td>8</td><td>1</td></tr><tr><td>9</td><td>2</td><tr><td>10</td><td>1</td></tr><tr><td>11</td><td>1</td></tr><tr><td>12</td><td>1</td></tr></table>
+<pre style="font-weight:bold">
+           Table Description: 
+ The Above Table Is Histogram Result That 
+ Stroke Date - Study Date <14 On CT All Studise 
+ The Total Number Of Patients is <span style="color:red">123</span>
+</pre>
+</td>
+<td>
+<img src="CT_date.jpg" width="400" height="300" style="margin :80px;">
+<pre style="font-weight:bold;margin :80px;">
+            Table Histogram Result
+</pre>
+
+</td>
+
+</tr>
+</table>
+<h3>
+Result Three: Analysis Among Stroke Date - Study Date >13 (MR) 
+<h3>
+<pre> 
+There Is <span style="color:red">2</span> Patient Whose  Stroke Date - Study Date Less Than 14 Days Of CT Study Among Patients Whose Stroke Date - Study Date Of MRI studies More Than 13 Days
+There Are <span style="color:red">44</span> Patients Whose Stroke Date - Study Date More Than 13 Days Of Both MRI And CT Studies.
+
+</pre>
+<h3>
+Result Four: DWI w/ Stroke Date - Study Date <7 (MR)
+</h3>
+<pre>Threre Are <span style="color:red">80</span> Studies (<span style="color:red">77</span> Patients) That Has An MRI Study With a DWI Series Included That Is Less Than 7 Days</pre>
+
+
+</body>
+</html>

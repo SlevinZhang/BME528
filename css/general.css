@@ -1,0 +1,91 @@
+@charset "utf-8";
+
+body {
+	overflow:auto;
+	background-color:#FFF;
+	padding: 10px;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+	width:1200px;
+}
+.header {
+	background-color:#900;
+	padding:10px;
+}
+.USC{
+	font-size:30px;
+	color:#FFF;
+}
+.projtitle{
+	color:#FFF;
+	font-size-adjust:inherit;
+	font-size:36px;
+	text-align:center
+}
+.loginform{
+	border:groove;
+	text-align:center;	
+}
+.loginform button{
+	width:100px;
+	height:30px;
+	
+}
+.menu ul
+{ 
+list-style:none;
+margin:0;
+padding:0;
+overflow:hidden;
+}
+
+.menu li
+{
+float:left;
+}
+.menu a:visited
+{
+display:block;
+width:190px;
+font-weight:bold;
+color:#FFFFFF;
+background-color:#09C;
+text-align:center;
+padding:4px;
+text-decoration:none;
+text-transform:uppercase;
+}
+
+.menu a:link
+{
+display:block;
+width:190px;
+font-weight:bold;
+color:#FFFFFF;
+background-color:#09C;
+text-align:center;
+padding:4px;
+text-decoration:none;
+text-transform:uppercase;
+}
+.menu a:hover,a:active
+{
+background-color:#FC0;
+}
+.right{
+	float:right;	
+}
+
+button{
+   font-size:15px;
+   border-style:ridge;
+   height:40px;
+   width:150px;
+   
+}
+
+button:hover{
+	background-color:#FF0;	
+}

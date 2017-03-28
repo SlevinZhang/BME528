@@ -1,0 +1,9 @@
+<div class="floatr boxee"><form action="admin" method="get">
+<span class="pale fxs">Search by Pat. name, MRN, Acc # or Study Desc.</span><br />
+<input type="hidden" value="1" name="page" />
+{{#search_sort}}<input type="hidden" value="{{& search_sort}}" name="sort" />{{/search_sort}}
+{{#search_direction}}<input type="hidden" value="{{& search_direction}}" name="direction" />{{/search_direction}}
+{{#search_limit}}<input type="hidden" value="{{& search_limit}}" name="limit" />{{/search_limit}}
+<div class="size3of4 unit"><input type="text" value="{{& search_value}}" name="search" class="textField mts mrs" /></div>
+<div class="size1of4 unit lastUnit">&nbsp;<input type="submit" value="Search" class="button pas fxs" /></div>
+</form></div>

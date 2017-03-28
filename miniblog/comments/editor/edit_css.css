@@ -1,0 +1,56 @@
+<style type="text/css">
+body {
+	color:#000; 
+	background-color:#fff; 
+	font-family: verdana,arial, helvetica, sans-serif; 
+	font-size:12px;
+}
+p {
+	font-family: verdana,arial, helvetica, sans-serif; 
+	font-size:12px;
+	margin-bottom:3px;
+}
+td {
+	font-family: verdana,arial, helvetica, sans-serif; 
+	font-size:12px;
+}
+h1 {
+	font-family: arial,helvetica, sans-serif;  
+	font-size:20px; 
+	color:#c30;
+}
+h2 {
+	font-family: arial,helvetica, sans-serif;  
+	font-size:15px; 
+	color:#c30;
+}
+select,textarea {
+	background-color:#f0f0f0; 
+	border: 1px solid; 
+	border-color:#333; 
+	color:#333;
+}
+.submit {
+	background-color:#f60; 
+	margin-top: 4px; 
+	border: 1px solid; 
+	border-color:#333; 
+	color:#333;
+}
+img { 
+	border:none;
+}
+.pagelink { 
+	border:1px solid #003; 
+	background-color:#ccf;
+}
+a.pagelink { 
+	text-decoration:none;
+}
+a:link, a:visited, a:active {
+	color: #33c;
+}
+a:hover {
+	color: #c33;
+}
+</style>

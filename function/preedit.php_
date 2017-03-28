@@ -1,0 +1,27 @@
+<?php 
+function preedit($row_result)
+{
+	foreach ($row_result as $key => $value)
+	{
+		echo "<script type=\"text/javascript\">
+	  	var ekey = '".$key."';";
+		if($value != null)
+		echo "
+		var evalue = '".$value."';";
+		else
+		echo "
+		var evalue = 'Null';";
+		echo "
+		$('select[name=\"'+ekey+'\"]>option[value=\"'+evalue+'\"]').attr('selected','selected');
+		$(':radio[name=\"'+ekey+'\"][value=\"'+evalue+'\"]').attr('checked','checked');
+		if(evalue != 'Null')
+		{
+			$(':checkbox[name=\"'+ekey+'\"]').attr('checked','checked');		
+		}
+		$(':text[name=\"'+ekey+'\"]').attr('value',evalue);
+		$('textarea[name=\"'+ekey+'\"]').html(evalue);
+		</script>";
+
+	}
+}
+?>  

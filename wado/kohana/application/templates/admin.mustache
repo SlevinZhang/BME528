@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+	<title>{{& site}} - {{& title}}</title>
+	<base href="{{base}}" />
+    <meta name="viewport" content="width=100%; initial-scale=1.0; minimum-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /> 
+	<link type="text/css" href="media/css/styles.min.css" rel="stylesheet" />
+	<link type="text/css" href="media/css/extra.css" rel="stylesheet" />
+	<link type="text/css" href="media/css/wado/common.css" rel="stylesheet" />
+</head>
+<body >
+<div class="bgDark">
+	<div class="unit size1of2"><a href="http://www.ipilab.org" target="_blank" title="IPILab website">&#169;IPILab - {{year}}<a></div>
+	<!--<div class="unit size1of2 lastUnit txtR">{{#is_logged_in}}<a href="admin/logout" title="logout">Logout</a>{{/is_logged_in}}</div>-->
+</div>
+{{#has_messages}}<span class="button pas pll prl">{{message}}</span>{{/has_messages}}
+{{> content}}
+<div class="page liquid bgDark"><a href="http://www.ipilab.org" target="_blank" title="IPILab website">&#169;IPILab - {{year}}<a></div>
+<script type="text/javascript" src="media/js/jq.js"></script>
+<script type="text/javascript" src="media/js/session.js"></script>
+<script type="text/javascript" src="media/js/options.js"></script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<?php defined('SYSPATH') or die('No direct script access.');
+
+class Controller_Admin extends Controller_Website {
+
+	protected $log = '';
+	
+	public $link = '';
+	
+	public function before()
+	{
+		parent::before();
+		if ( ! Auth::instance()->logged_in() AND ! Auth::instance()->login(Arr::get($_POST, 'user', ''), Arr::get($_POST, 'pass', '')))
+		{
+			Auth::instance()->logout(TRUE);
+			$message = ($_POST) ? 'Wrong Credentials' : '';
+			if (isset($_GET['message']))
+			{
+				$message = $_GET['message'];
+				unset($_GET['message']);
+			}
+			
+			if (isset($_GET['redirect']))
+			{
+				// Avoid redirecting a redirect
+				$redirect = $_GET['redirect'];
+			}
+			else
+			{
+				// Do a redirect. Detect current uri
+				$redirect = Request::detect_uri();
+				if ($_GET)
+				{
+					$query = array();
+					foreach ($_GET as $key => $value)
+					{
+						$query[] = $key.'='.$value;
+					}
+					// Append QUERY_STRING if set
+					$redirect .= rawurlencode('?'.implode('&', $query));
+				}
+			}
+			
+			$this->request->redirect('?redirect='.$redirect.'&message='.$message);
+		}
+		else
+		{
+			if (isset($_GET['redirect']))
+			{
+				// Perform the redirect
+				$this->request->redirect(rawurldecode($_GET['redirect']));
+			}
+			// We are OK otherwise
+			$this->view  = new View_Admin;
+		}
+	}
+
+	public function action_dummy()
+	{
+	}
+	
+	public function action_ping()
+	{
+		$this->view = '';
+	}
+	
+	public function action_test()
+	{
+		$this->view  = new View_Test;
+	}
+	
+	public function action_index()
+	{
+		$site	= Arr::get($_GET, 'site', Kohana::config('database.default_site'));
+		
+		if ($site !== '')
+		{
+			$instance = Kohana::config('database.sites.'.$site.'.vendor').'_'.Kohana::config('database.sites.'.$site.'.product');
+		}
+
+		// Create a Model
+		$pacs = Model_PACS::instance($instance, $site);
+		$this->view->search = new View_Worklist;
+		// Assign a new view to the contents
+		if (Request::user_agent('mobile'))
+		{
+			$this->view->results = new View_Worklist_Mobile;
+			$this->log = '(M) ';
+		}
+		else
+		{
+			$this->view->results = new View_Worklist_Desktop;
+			$this->log = '(D) ';
+		}
+		$this->view->results->pacs = $pacs;
+		$this->view->results->current_site = $site;
+		$this->view->results->pagination = TRUE;
+		
+		$this->view->results->init();
+		
+		$this->log .= 'worklist @ '.$site.' '.$this->view->search->current_filter();
+	}
+	
+	/*public function action_di()
+	{
+		$site	= Arr::get($_GET, 'site', Kohana::config('database.default_site'));
+		
+		if ($site !== '')
+		{
+			$instance = Kohana::config('database.sites.'.$site.'.vendor').'_'.Kohana::config('database.sites.'.$site.'.product');
+		}
+
+		// Create a Model
+		$pacs = Model_PACS::instance($instance, $site);
+		
+		// Assign a new view to the contents
+		$this->view->results = new View_Worklist_Desktop;
+		$this->view->results->pacs = $pacs;
+		$this->view->results->current_site = $site;
+		$this->view->results->pagination = TRUE;
+		
+		$this->view->results->init();
+		
+		$this->log = '(D) '.'worklist @ '.$site.' '.$this->view->search->current_filter();
+	}
+	
+	public function action_mi()
+	{
+		$site	= Arr::get($_GET, 'site', Kohana::config('database.default_site'));
+		
+		if ($site !== '')
+		{
+			$instance = Kohana::config('database.sites.'.$site.'.vendor').'_'.Kohana::config('database.sites.'.$site.'.product');
+		}
+
+		// Create a Model
+		$pacs = Model_PACS::instance($instance, $site);
+		
+		// Assign a new view to the contents
+		$this->view->results = new View_Worklist_Mobile;
+		$this->view->results->pacs = $pacs;
+		$this->view->results->current_site = $site;
+		$this->view->results->pagination = TRUE;
+		
+		$this->view->results->init();
+		
+		$this->log = '(M) '.'worklist @ '.$site.' '.$this->view->search->current_filter();
+	}*/
+	
+	public function action_search()
+	{
+		// Create a Model
+		$pacs = new Model_PACS;//::instance($instance, $site);
+		
+		// Assign a new view to the contents
+		$this->view->search = new View_Worklist;
+		if (Request::user_agent('mobile'))
+		{
+			$this->view->results = new View_Worklist_Mobile;
+			$this->log = '(M) ';
+		}
+		else
+		{
+			$this->view->results = new View_Worklist_Desktop;
+			$this->log = '(D) ';
+		}
+		$this->view->results->pacs = $pacs;
+		
+		$this->view->results->init();
+		
+		$this->log .= $this->view->results->search_criteria();
+	}
+
+	/*public function action_ds()
+	{
+		// Create a Model
+		$pacs = new Model_PACS;//::instance($instance, $site);
+		
+		// Assign a new view to the contents
+		$this->view->results = new View_Worklist_Desktop;
+		$this->view->results->pacs = $pacs;
+		
+		$this->view->results->init();
+		
+		$this->log = '(D) '.$this->view->results->search_criteria();
+	}
+
+	public function action_ms()
+	{
+		// Create a Model
+		$pacs = new Model_PACS;//::instance($instance, $site);
+		
+		// Assign a new view to the contents
+		$this->view->results = new View_Worklist_Mobile;
+		$this->view->results->pacs = $pacs;
+		
+		$this->view->results->init();
+		
+		$this->log = '(M) '.$this->view->results->search_criteria();
+	}*/
+
+	public function action_study()
+	{
+		if (Request::user_agent('mobile'))
+		{
+			if (Request::user_agent('mobile') == 'iPad')
+			{
+				$this->action_tw();
+			}
+			else
+			{
+				$this->action_mw();
+			}
+		}
+		else
+		{
+			$this->action_dw();
+		}
+	}
+
+	public function action_dw()
+	{
+		$site	= Arr::get($_GET, 'site', Kohana::config('database.default_site'));
+		$product = Kohana::config('database.sites.'.$site.'.product');
+		$vendor  = Kohana::config('database.sites.'.$site.'.vendor');
+
+		// Create a Model
+		$pacs = Model_PACS::instance($vendor.'_'.$product, $site);
+		$pacs->study();
+		
+		if ( ! $pacs->loaded())
+		{
+			//throw new Wado_404('Study Not Found');
+		}
+		
+		// Assign a new view to the contents
+		$this->view = new View_Desktop;
+		//$this->view->title = $study->patient_name;
+		$this->view->pacs = $pacs;
+
+		$this->log = '(D) study: '.$pacs->exam['accession'].' @ '.$pacs->exam['site'].'; mrn: '.$pacs->exam['mrn'];
+	}
+	
+	public function action_mw()
+	{
+		$site	= Arr::get($_GET, 'site', Kohana::config('database.default_site'));
+		$product = Kohana::config('database.sites.'.$site.'.product');
+		$vendor  = Kohana::config('database.sites.'.$site.'.vendor');
+
+		// Create a Model
+		$pacs = Model_PACS::instance($vendor.'_'.$product, $site);
+		$pacs->study();
+		
+		if ( ! $pacs->loaded())
+		{
+			//throw new Wado_404('Study Not Found');
+		}
+		
+		// Assign a new view to the contents
+		$this->view = new View_Mobile_Handheld;
+		//$this->view->title = $study->patient_name;
+		$this->view->pacs = $pacs;
+
+		$this->log = '(M) study: '.$pacs->exam['accession'].' @ '.$pacs->exam['site'].'; mrn: '.$pacs->exam['mrn'];
+	}
+	
+	public function action_tw()
+	{
+		$site	= Arr::get($_GET, 'site', Kohana::config('database.default_site'));
+		$product = Kohana::config('database.sites.'.$site.'.product');
+		$vendor  = Kohana::config('database.sites.'.$site.'.vendor');
+
+		// Create a Model
+		$pacs = Model_PACS::instance($vendor.'_'.$product, $site);
+		$pacs->study();
+		
+		if ( ! $pacs->loaded())
+		{
+			//throw new Wado_404('Study Not Found');
+		}
+		
+		// Assign a new view to the contents
+		$this->view = new View_Mobile_Tablet;
+		//$this->view->title = $study->patient_name;
+		$this->view->pacs = $pacs;
+
+		$this->log = '(T) study: '.$pacs->exam['accession'].' @ '.$pacs->exam['site'].'; mrn: '.$pacs->exam['mrn'];
+	}
+	
+	public function action_series()
+	{
+		if (Request::user_agent('mobile'))
+		{
+			if (Request::user_agent('mobile') == 'iPad')
+			{
+				$this->action_tw();
+			}
+			else
+			{
+				$this->action_mws();
+			}
+		}
+		else
+		{
+			$this->action_dw();
+		}
+	}
+	
+	public function action_mws()
+	{
+		$site	= Arr::get($_GET, 'site', Kohana::config('database.default_site'));
+		$product = Kohana::config('database.sites.'.$site.'.product');
+		$vendor  = Kohana::config('database.sites.'.$site.'.vendor');
+		
+		// Create a Model
+		$pacs = Model_PACS::instance($vendor.'_'.$product, $site);
+		$pacs->study();
+		
+		if ( ! $pacs->loaded())
+		{
+			//throw new Wado_404('Study Not Found');
+		}
+		
+		$this->view = new View_Mobile_Handheld_Series;
+		$this->view->pacs = $pacs;
+		
+		$series = Arr::get($_GET, 'index');
+		$this->log = '(M) study: '.$pacs->exam['accession'].' @ '.$pacs->exam['site'].', series: '.$series.'; mrn: '.$pacs->exam['mrn'];
+	}
+	
+	public function action_attachment()
+	{
+		if (Request::user_agent('mobile'))
+		{
+			if (Request::user_agent('mobile') == 'iPad')
+			{
+				$this->action_tw();
+			}
+			else
+			{
+				$this->action_mwa();
+			}
+		}
+		else
+		{
+			$this->action_dw();
+		}
+	}
+	
+	public function action_mwa()
+	{
+		$site	= Arr::get($_GET, 'site', Kohana::config('database.default_site'));
+		$product = Kohana::config('database.sites.'.$site.'.product');
+		$vendor  = Kohana::config('database.sites.'.$site.'.vendor');
+		
+		// Create a Model
+		$pacs = Model_PACS::instance($vendor.'_'.$product, $site);
+		$pacs->study();
+		//$pacs->link = $this->link;		
+		if ( ! $pacs->loaded())
+		{
+			//throw new Wado_404('Study Not Found');
+		}
+		
+		$this->view = new View_Mobile_Handheld_Attach;
+		$this->view->pacs = $pacs;
+		
+		$attachment = Arr::get($_GET, 'index');
+		$type = Arr::get($_GET, 'type');
+		$this->log = '(M) study: '.$pacs->exam['accession'].' @ '.$pacs->exam['site'].', attachment '.$attachment.' ('.$type.'); mrn: '.$pacs->exam['mrn'];
+	}
+	
+	public function action_logout()
+	{
+		Mnode::log('logout');
+		Auth::instance()->logout(TRUE);
+		$this->request->redirect('?message=You have been successfully logged out!');
+		//$this->view = new View_Public;
+	}
+	
+	public function after()
+	{
+		if ($this->log != '')
+		{
+			Mnode::log($this->log);
+		}
+
+		parent::after();
+	}
+} // End Admin

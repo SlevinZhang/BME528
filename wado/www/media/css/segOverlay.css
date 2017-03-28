@@ -1,0 +1,17 @@
+.segResults:before { 
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top:55%;
+  left:10%;
+  font-family:Helvetica;
+  font-weight:900;
+  color:rgba(255,255,255,.85);
+  font-size:6rem;
+  -webkit-transform:translate(-50%, -50%);
+  transform:translate(-50%, -50%);
+}
+
+.clicked .segResults:before {
+  content: url(http://www.imaginis.com/files/media/transfer/img/ct-scan/Image40.jpg);
+}

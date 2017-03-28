@@ -1,0 +1,370 @@
+<?php defined('SYSPATH') or die('No direct script access.');
+
+class Controller_Admin extends Controller {
+
+	protected $log = '';
+
+	/*
+	 * Standard before method. Checks authentication and initializes log
+	 */
+	public function before()
+	{
+		parent::before();
+		
+/*		if ( ! Authen::instance()->logged_in() 
+			AND ! Authen::instance()->login(Arr::get($this->post, 'user', ''), Arr::get($this->post, 'pass', '')))
+		{
+			// User not logged in
+			Authen::instance()->logout(TRUE);
+			// Set the message
+			$message = ($this->post) ? 'Wrong Credentials' : 'Session Expired';
+			
+			if (isset($this->get['message']))
+			{
+				// If there is another message set in the query, get that
+				$message = $this->get['message'];
+				unset($this->get['message']);
+			}
+			
+			if (isset($this->get['redirect']))
+			{
+				// Avoid redirecting a redirect
+				$redirect = $this->get['redirect'];
+			}
+			else
+			{
+				// Do a redirect. Detect current uri
+				$redirect = Request::detect_uri();
+				if ($this->get)
+				{
+					// Append QUERY_STRING if set
+					$redirect .= rawurlencode('?'.http_build_query($this->get, '', '&'));
+				}
+			}
+			
+			// Redirect with the message
+			$this->request->redirect('?redirect='.$redirect.'&message='.$message);
+		}
+		else
+		{
+			// User got authenticated
+			if (isset($this->get['redirect']))
+			{
+				// Perform the redirect
+				$this->request->redirect(rawurldecode($this->get['redirect']));
+			}
+		}
+*/
+		// Initializa log based on device
+		$this->log = (Request::user_agent('mobile')) ? ' (M) ' : ' (D) ';
+	}
+
+	/*
+	 * Sets userinfo values to template
+	 */
+	protected function assign_user()
+	{
+		// User is authenticated
+		$this->template->is_logged_in = TRUE;
+		$this->template->user = Authen::instance()->get_user();//->as_array();
+	}
+	
+	/*
+	 * Sets info about the site used and instantiates the PACS model based on site
+	 */
+	protected function load_pacs()
+	{
+		// Grab the current site
+		$this->site = Arr::get($this->get, 'site', Kohana::$config->load('database.default_site'));
+		// Create a Model for the PACS
+		$this->pacs = Model_PACS::instance($this->site);
+	}
+	
+	/*
+	 * Sets searching info into template userinfo values to template
+	 */
+	protected function add_search()
+	{
+		$this->template->search_sort = $this->pacs->sort('key', TRUE);
+		$this->template->search_value = $this->pacs->search();
+		$this->template->search_direction = $this->pacs->direction();
+		$this->template->search_limit = $this->pacs->limit();
+	}
+	
+	/*
+	 * Empty reply to "keepalive" requests
+	 */
+	public function action_ping()
+	{
+		$this->template = '';
+	}
+	
+	/*
+	 * Main action. Worklist
+	 */
+	public function action_index()
+	{
+		$this->load_pacs();
+		$this->assign_user();
+		
+		$this->pacs
+			->page(Arr::get($this->get, 'page', 1))
+			->limit(Arr::get($this->get, 'count', 25))
+			->sort(Arr::get($this->get, 'sort', 'Study Date'))
+			->direction(Arr::get($this->get, 'direction', 'DESC'))
+			->search(Arr::get($this->get, 'search', ''));
+
+		$this->template->navigation = array(
+			'page' => $this->pacs->page(),
+			'limit' => $this->pacs->limit(),
+			'total' => 0,
+		);
+
+		$this->add_search();
+		
+		$this->template->pacs = $this->pacs;
+		$this->template->current_site = $this->site;
+		
+		$this->log .= 'worklist @ '.$this->site.' '.http_build_query($this->get, '', '&');
+	}
+	
+	/*
+	 * Action to display patient info
+	 */
+	public function action_patient()
+	{
+		$this->load_pacs();
+		$this->assign_user();
+		
+		$this->pacs
+			->sort(Arr::get($this->get, 'sort', 'Study Date'))
+			->direction(Arr::get($this->get, 'direction', 'DESC'));
+
+		$this->add_search();
+
+		$patient = $this->pacs->get_patient_from_mrn(Arr::get($this->get, 'patientID'));
+		
+		$this->template->patient_id = $patient['dcm_PatientID'];
+		
+		$this->template->patient = $patient;
+		$this->template->pacs = $this->pacs;
+		$this->template->current_site = $this->site;
+		
+		$this->log .= 'patient @ '.$this->site.' '.http_build_query($this->get, '', '&');
+	}
+	
+	public function action_upload()
+	{
+	
+	}
+
+	/*
+	 * Action to display information from the study
+	 */
+	public function action_study()
+	{
+		if (Request::user_agent('mobile') AND (Request::user_agent('mobile') != 'iPad'))
+		{
+			$this->action_mw();
+		}
+		else
+		{
+			//$this->action_tw();
+			$this->action_dw();
+		}
+		
+		$this->log .= 'study @ '.$this->site.' '.http_build_query($this->get, '', '&');
+	}
+
+	public function action_dw()
+	{
+		$this->study();
+	}
+	
+	public function action_mw()
+	{
+		$this->template = new View_Admin_Study_Mobile;
+		$this->template->sop = (Arr::get($this->get, 'SOP'));
+		$this->template->cid = (Arr::get($this->get, 'CID'));
+	
+		$this->study();
+	}
+	
+
+	public function study()
+	{
+		$this->load_pacs();
+		$this->assign_user();
+
+		$this->pacs
+			->study_uid(Arr::get($this->get, 'study_uid'))
+			->accession(Arr::get($this->get, 'accession'));
+		
+		$this->template->pacs = $this->pacs;
+		$this->template->site = $this->site;
+		$this->template->patient = $this->pacs->get_patient_from_study($this->pacs->study_uid());
+		// Trigger the PACS to load study info
+		$this->template->pacs->process_study();
+	}
+
+
+/*	
+	public function action_tw()
+	{
+		$site	= Arr::get($_GET, 'site', Kohana::$config->load('database.default_site'));
+		$product = Kohana::$config->load('database.sites.'.$site.'.product');
+		$vendor  = Kohana::$config->load('database.sites.'.$site.'.vendor');
+
+		// Create a Model
+		$pacs = Model_PACS::instance($vendor.'_'.$product, $site);
+		$pacs->study();
+		
+		if ( ! $pacs->loaded())
+		{
+			//throw new Wado_404('Study Not Found');
+		}
+		
+		// Assign a new view to the contents
+		$this->view = new View_Mobile_Tablet;
+		//$this->view->title = $study->patient_name;
+		$this->view->pacs = $pacs;
+
+		$this->log = '(T) study: '.$pacs->exam['accession'].' @ '.$pacs->exam['site'].'; mrn: '.$pacs->exam['mrn'];
+	}*/
+	
+	
+	public function action_series()
+	{
+		if (Request::user_agent('mobile'))
+		{
+			if (Request::user_agent('mobile') == 'iPad')
+			{
+				
+				$this->request->redirect('admin/study?site='.$this->site.'&study_uid='.Arr::get($this->get, 'study_uid', ''));
+			}
+			else
+			{
+				$this->action_mws();
+			}
+		}
+		else
+		{
+			$this->request->redirect('admin/study?site='.$this->site.'&study_uid='.Arr::get($this->get, 'study_uid', ''));
+		}
+		$this->log .= 'series @ '.$this->site.' '.Arr::get($this->get, 'study', '');
+	}
+	
+	public function action_mws()
+	{
+		$this->template = new View_Admin_Study;
+		$this->template->is_desktop = FALSE;
+		
+		$this->template->settings = array(
+			'index'        => Arr::get($this->get, 'index', ''),
+			'series_uid'   => Arr::get($this->get, 'series_uid', ''),
+			'frames'       => Arr::get($this->get, 'frames', ''),
+			'image'        => Arr::get($this->get, 'image', 0),
+			'bookmark'     => Arr::get($this->get, 'bookmark', 0),
+			'scale'        => Arr::get($this->get, 'scale', 0),
+			'iLeft'        => Arr::get($this->get, 'iLeft', 0),
+			'iTop'         => Arr::get($this->get, 'iTop', 0),
+			'region'       => Arr::get($this->get, 'region', '0,0,1,1'),
+			'WindowWidth'  => Arr::get($this->get, 'WindowWidth', 0),
+			'WindowCenter' => Arr::get($this->get, 'WindowCenter', 0),
+		);
+
+		$this->study();
+		
+		/*$this->load_pacs();
+
+		$this->template = new View_Admin_Series_Mobile;
+
+		$this->assign_user();
+		$this->load_pacs();
+
+		$this->pacs
+			->study_uid(Arr::get($this->get, 'study_uid'));
+
+		$this->template->settings = array(
+			'index'        => Arr::get($this->get, 'index', ''),
+			'series_uid'   => Arr::get($this->get, 'series_uid', ''),
+			'frames'       => Arr::get($this->get, 'frames', ''),
+			'image'        => Arr::get($this->get, 'image', 0),
+			'bookmark'     => Arr::get($this->get, 'bookmark', 0),
+			'scale'        => Arr::get($this->get, 'scale', 0),
+			'iLeft'        => Arr::get($this->get, 'iLeft', 0),
+			'iTop'         => Arr::get($this->get, 'iTop', 0),
+			'region'       => Arr::get($this->get, 'region', '0,0,1,1'),
+			'WindowWidth'  => Arr::get($this->get, 'WindowWidth', 0),
+			'WindowCenter' => Arr::get($this->get, 'WindowCenter', 0),
+		);
+		
+		$this->template->site = $this->site;
+		$this->template->pacs = $this->pacs;
+		$this->template->patient = $this->pacs->get_patient_from_study($this->pacs->study_uid());
+		$this->template->pacs->process_study();
+		*/
+	}
+	
+	public function action_attachment()
+	{
+		if (Request::user_agent('mobile'))
+		{
+			if (Request::user_agent('mobile') == 'iPad')
+			{
+				$this->action_tw();
+			}
+			else
+			{
+				$this->action_mwa();
+			}
+		}
+		else
+		{
+			$this->action_dw();
+		}
+	}
+	
+	public function action_mwa()
+	{
+		$site	= Arr::get($_GET, 'site', Kohana::$config->load('database.default_site'));
+		$product = Kohana::$config->load('database.sites.'.$site.'.product');
+		$vendor  = Kohana::$config->load('database.sites.'.$site.'.vendor');
+		
+		// Create a Model
+		$pacs = Model_PACS::instance($vendor.'_'.$product, $site);
+		$pacs->study();
+		//$pacs->link = $this->link;		
+		if ( ! $pacs->loaded())
+		{
+			//throw new Wado_404('Study Not Found');
+		}
+		
+		$this->view = new View_Mobile_Handheld_Attach;
+		$this->view->pacs = $pacs;
+		
+		$attachment = Arr::get($_GET, 'index');
+		$type = Arr::get($_GET, 'type');
+		$this->log = '(M) study: '.$pacs->exam['accession'].' @ '.$pacs->exam['site'].', attachment '.$attachment.' ('.$type.'); mrn: '.$pacs->exam['mrn'];
+	}
+	
+	public function action_logout()
+	{
+		Mnode::log('logout');
+		Authen::instance()->logout(TRUE);
+		$this->request->redirect('?message=You have been successfully logged out!');
+	}
+	
+	public function after()
+	{
+		// Messages can be easily added like this. Communication is great!
+		//$this->template->message = 'test';
+		if ($this->log != '')
+		{
+			Mnode::log($this->log);
+		}
+
+		parent::after();
+	}
+	
+} // End Admin

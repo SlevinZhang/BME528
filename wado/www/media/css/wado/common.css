@@ -1,0 +1,119 @@
+/* Main */
+.bk1{background:white;}
+.bk2{background:black;}
+.bk3{background:gray;}
+.bk4{background:#D4D4D4 !important; /*#B7D84B !important;*/}
+.bk5{background:red;}
+.op20{opacity:0.2;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";filter: alpha(opacity=20);}
+.op80{opacity:0.8;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";filter: alpha(opacity=80);}
+.opPane{opacity:0.5;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";filter: alpha(opacity=50);}
+
+
+.white{color:white !important;}
+.black{color:black !important;}
+.bar{width:256px;}
+.hand{cursor:hand;}
+.toolbar{line-height:18px;padding-top:1px;}
+.inactiveText{background:gray !important;color:white !important;-moz-border-radius: 5px;border-radius: 5px;}
+.inactiveText:hover,.activeText,.activeTool, .docTool:hover, .imageTool:hover, .button1{background:green !important;color:white !important;-moz-border-radius: 5px;border-radius: 5px;}
+.button1:hover, .activeTool:hover{background:#105511 !important;}
+.activeLayout, .layoutTool:hover, .button, .holder:hover{background:#005A9C !important;color:white !important;-moz-border-radius: 5px;border-radius: 5px;}
+.button2{background:#000000 !important;color:white !important;-moz-border-radius: 5px;border-radius: 5px;}
+.button:hover{background:#0000FF !important;}
+.button, .button1, .button2, .imageTool, .layoutTool, .goPrev, .goNext{text-decoration:none !important;}
+.selected{border:1px solid green !important;border-left:none;border-right:none;}
+.normal{border:1px solid gray;border-left:none;border-right:none;}
+.paneLoader:hover{background:red;}
+.border5{-moz-border-radius: 5px;border-radius: 5px;-webkit-border-radius:5px;}
+.border10{-moz-border-radius: 10px;border-radius: 10px;-webkit-border-radius:10px;}
+.w15{width:15px;}
+
+.paxs{padding:3px;}
+.bfont{font-size:64px;}
+.lhhalf{line-height:122px;}
+.lh100{line-height:244px;}
+.fxs{font-size:85%;}
+.fs{font-size:90%;}
+.fl{font-size:110%;}
+.fxl{font-size:125%;}
+.strip{height:20px;line-height:20px;}
+.w110{width:110px;}
+.w50{width:50px;}
+.ma1{margin:1px;}
+#menu {margin:0px;width:100%;}
+.layer2{z-index:2;}
+.layer3{z-index:3;}
+.layer8{z-index:8;}
+.layer9{z-index:9;}
+.block{display:block;}
+.none{display:none;}
+/*#menu li{border-bottom:none;}#menu li:last-child{border-bottom:1px solid gray;}*/
+.full{width:100%;}
+.hauto{height:auto;}
+.hhalf{height:50%;}
+.h100{height:100% !important;}
+.center{margin:auto;}
+.rel{position:relative;}
+.abs{position:absolute;}
+.ohidden{overflow:hidden;}
+.oauto{overflow:auto;}
+.pt0{top:0;}
+.pl0{left:0;}
+.pr0{right:0;}
+.pr5{right:5px;}
+.pr4em{right:4em;}
+.pb0{bottom:0;}
+.pt1{top:1px;}
+.pl1{left:1px;}
+.pb1{bottom:1px;}
+.pr1{right:1px;}
+.pt20{top:20px;}
+.pt50{top:50px;}
+.pt80{top:80px;}
+.pb20{bottom:20px;}
+.pa2{padding:2px;}
+
+.viewer img{height:100%;}
+/*.wrapper{display:table-cell;}*/
+.half img{height:auto;}
+#vFull{overflow-y:auto;}
+#vReport{overflow-y:auto;color:black;border:5px solid gray;background:white;}#vReport pre{white-space:pre-line;}
+.half{border:none;}
+.ml-2{margin-left:-2px;}
+.ba2{border:1px solid gray;}.active{border:1px solid blue;}
+
+.mobile{display:none;}
+.desktop{display:block;}
+.data th{padding:5px;} .data td {padding: 1px;}.data td a{padding-top:2px;padding-bottom:2px;}
+
+.odd{background: none repeat scroll 0 0 #EFF4FB;}
+.floatl{float:left;}
+.floatr{float:right;}
+
+.bbr{border-right:1px solid black;}
+
+.current{background:#fff684;}
+
+#header{
+padding: 0.1em 0em 0.3em 0.3em;
+background-color:#333333;
+color:#FFFFFF;
+font-family: Verdana;
+letter-spacing:0.1em;
+font-size:10pt;
+}
+.tinyCol{width:300px;}
+
+.sCom{background: url(icons/tag_red.png) no-repeat center left;}
+.sDic{background: url(icons/tag_yellow.png) no-repeat center left;}
+.sFin{background: url(icons/tag_green.png) no-repeat center left;}
+.bb1g{border-bottom:1px dotted gray;}
+.Com{background: #FFDDDD;}
+.Dic{background: #FFFFCC;}
+.Fin{background: #BBFFB6;}
+
+div.setting:hover ul{
+	display:block}
+
+div:hover div.setting{
+	display:block}

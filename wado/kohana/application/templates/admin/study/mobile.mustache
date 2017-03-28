@@ -1,0 +1,26 @@
+<div class="data spec">
+{{#study}}
+<h2 id="top" class="h2 mbn bbg">[{{Modality}}] {{StudyDescription}} {{#STATUS}}<span class="pale fxs">[<em>{{STATUS}}</em>]</span>{{/STATUS}}</h2>
+<h4 class="h4 mtn mbn bbg">Accession: {{AccessionNumber}}</h4>
+<a href="admin/patient?patientID={{PatientID}}&patient_id={{PatientID}}" class="h5 mlm">
+{{PatientName}} <span class="pale fxs">[{{PatientID}}]</span></a>
+{{/study}}
+<h6 class="opaque">Click on series description or image displayed to view series</h6>
+
+<table class="mts">
+{{#series}}<tr id="{{& type}}">
+	<td>
+	<div class="media">
+		<a href="{{& href}}}">{{description}}</a>
+		<a class="img icon" href="{{& href}}}">{{& icon}}</a>
+		<div class="bd">
+			<span class="detail">{{item}}</span>
+			<span class="detail">{{description}}</span>
+			<span class="detail">{{{bookmark}}}</span>
+		</div>
+	</div>
+	<div class="floatr txtR" style="margin-top:-20px;"><a href="#" onclick="window.scrollTo(0, 1);return false;" class="prm">Go to top &uarr;</a></div>
+	</td>
+</tr>{{/series}}
+</table>
+</div>

@@ -1,0 +1,93 @@
+/* roScripts
+Table Design by Mihalcea Romeo
+www.roscripts.com */
+
+body
+{
+	/*width: 320px;*/
+	font-family:'Trebuchet MS',helvetica,arial,verdana;
+	-webkit-user-select: none;
+}
+select 
+{
+	width: 100px;
+}
+/*img.alignleft, div.alignleft 
+{
+	float:left;
+	margin:0 0.5em 0.5em 0;
+}*/
+a
+{
+	color:#950000;
+	text-decoration:none;
+}
+a img
+{
+	border:none;
+} 
+table.worklist
+{
+	border: 0px;
+	border-style: dotted dotted dotted dotted;
+	border-collapse:collapse;
+	font-size:0.8em;
+	color: #333;
+}
+table.worklist td, th
+{
+	padding:4px;
+}
+table.worklist th
+{
+	background:#333 url(http://www.roscripts.com/images/llsh.gif) repeat-x;
+	color:#fff
+}
+table.worklist tr
+{
+	border-bottom:1px dotted #333;
+	border-top:1px dotted #333;
+	border-left:0px solid #686868;
+	border-right:0px solid #686868;
+}
+table.worklist th
+{
+	white-space: nowrap;
+}
+table.worklist tr.even td
+{
+	background:#EFF4FB;
+}
+table.worklist tr.odd td
+{
+	background:#fafafa
+}
+div.worklist 
+{
+	height:15px;
+	overflow:hidden;
+}
+/*table a:visited {
+	font-weight:normal;
+	color:#666;
+	text-decoration: line-through;
+}
+table a:hover {
+	border-bottom: 1px dashed #bbb;
+}
+tbody tr:hover {
+	background:#fafafa
+}*/
+#header {
+  padding: 0.3em 0;
+  padding-bottom: 0.4em;
+  text-indent: 0.6em;
+  margin:0 0 0.2em 0;
+  background-color:#333333;
+  color:#FFFFFF;
+  font-family: Verdana;
+  letter-spacing:0.1em;
+  font-size:10pt;
+  text-align:right;
+  padding-right:0.8em;
+}

@@ -1,0 +1,26 @@
+{{#results}}<div class="data spec">
+{{> search}}
+<h2 class="h2">{{#showing}}Showing {{showing}} {{count}} <span class="fxs">[{{first}} - {{last}}]</span> <span class="neutral fxs">out of {{total}}.</span>{{/showing}}
+{{^showing}}Nothing found.{{/showing}}
+{{#search_value}}<span class="sharp fxs"><em>&nbsp;Searched "{{& search_value}}"</em></span>{{/search_value}}</h2>
+{{#showing}}<div class="line pbs">{{> navigation}}</div>
+<table>
+<thead><tr class="bgContrast">
+{{#headers}}<th class="txtC{{#class}} {{& class}}{{/class}}{{#th_mobile}} desktopTH{{/th_mobile}}">
+{{#items}}<a href="{{& url}}" class="{{class}} inline" title="{{title}}">{{name}}</a>{{#separator}} - {{/separator}}{{/items}}</th>{{/headers}}
+</tr></thead>
+<tbody>{{#rows}}{{increment}}
+<tr class="desktopTR{{#odd}} bgLite{{/odd}}">
+<td><strong><a href="admin/patient?patientID={{& PatientID}}&patient_id={{& patient_id}}" class="sharp" title="View Patient">{{& PatientName}} [{{& PATIENTID_HIGHLIGHT}}]</a></strong></td>
+<td><a href="admin/study?site={{site}}&study_uid={{StudyInstanceUID}}" title="View Study">[{{& Modality}}: {{& AccessionNumber}}] {{& StudyDescription}}</a></td>
+<td class="txtC"><a href="admin/study?site={{site}}&study_uid={{StudyInstanceUID}}" title="View Study">{{StudyDate}}</a></td></tr>
+<tr class="mobileTR{{#odd}} bgLite{{/odd}}">
+<td class="bbn first">
+<strong><a href="admin/patient?patientID={{& PatientID}}&patient_id={{& patient_id}}" class="sharp" title="View Patient">{{& PatientName}} [{{& PATIENTID_HIGHLIGHT}}]</a></strong></td>
+{{!pale}}<td class="txtC bbn last"><a href="admin/study?site={{site}}&study_uid={{StudyInstanceUID}}" title="View Study">{{StudyDate}}</a></td></tr>
+<tr class="mobileTR{{#odd}} bgLite{{/odd}}">
+{{!neutral}}<td colspan="2" class="btn last"><a href="admin/study?site={{site}}&study_uid={{StudyInstanceUID}}" title="View Study">[{{& Modality}}: {{& AccessionNumber}}] {{& StudyDescription}}</a></td></tr>
+{{/rows}}</tbody>
+</table>
+<div class="line pts">{{> navigation}}</div>{{/showing}}
+</div>{{/results}}

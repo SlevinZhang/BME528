@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+	<title>{{title}} - {{#study}}{{PatientName}}: {{StudyDescription}} [# {{AccessionNumber}}]{{/study}}</title>
+	<base href="{{base}}" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="format-detection" content="telephone=no">
+	<link type="text/css" href="media/css/styles.min.css?1" rel="stylesheet" />
+	<link type="text/css" href="media/css/wado/common.css?1" rel="stylesheet" />
+	<link type="text/css" href="media/css/wado/desktop.css?1" rel="stylesheet" />
+	<link type="text/css" href="media/css/extras.css?1" rel="stylesheet" />
+	
+	<meta http-equiv="imagetoolbar" content="no" />
+</head>
+<body>
+<div class="abs pl0 button layer9 pls prs none" id="dbg" style="bottom:30px;"></div>
+{{#study}}
+<div class="abs strip" id="top">
+	{{#is_desktop}}<div class="unit size1of3 txtL fl">
+	<a href="/index.php" class="home">Home</a>
+	<a href="" id="back">Back</a>
+
+
+	<!--	> Study:
+	 <a href="admin/patient?patientID={{PatientID}}&patient_id={{#patient}}{{id}}{{/patient}}">{{PatientName}}</a>-->
+	 <a href="admin/ajax/patient?patientID={{PatientID}}&study_uid={{StudyInstanceUID}}" class="none" id="ajaxStudies"></a>
+	</div>
+	<div class="unit size1of3 lastUnit txtR" id="studies">{{StudyDescription}}</div>{{/is_desktop}}
+	{{^is_desktop}}<div class="unit size1of1 txtL">
+	<a href="admin" class="home">&nbsp;</a>
+	<a href="admin/patient?patientID={{PatientID}}&patient_id={{#patient}}{{id}}{{/patient}}">{{PatientName}}</a>
+	- <a id="studyDescription" href="admin/study?site={{site}}&study_uid={{StudyInstanceUID}}">{{StudyDescription}}</a></div>{{/is_desktop}}	
+</div>
+<iframe id="eformframe" class="abs none"  onfocus="window.focus()" src="/template/list_subject.php?study_uid={{StudyInstanceUID}}&patientID={{PatientID}}">
+</iframe>
+
+<iframe id="templateframe" class="abs none" src="media/templates/brain-templates.pdf">
+</iframe>
+
+<div class="abs txtL{{^is_desktop}} none{{/is_desktop}}" id="accession">
+	<div class="txtC strip"><span id="accession_number" class="fl">{{AccessionNumber}}</span> <a href="#" class="button pan pls prs fl" id="toggleMenu">hide</a></div>
+</div>
+<div class="abs txtL bar oauto{{^is_desktop}} none{{/is_desktop}}" style="overflow-x:hidden;" id="menuContainer">
+	<ul id="menu" class="full">{{> menu}}</ul>
+	{{! not needed?
+	<div id="scrolls" class="abs strip pb20 bk4 layer9 full">
+		<a class="txtC unit size1of4 block" id="scrollTop" href="#"><span class="button pan pls prs">Top</span></a>
+		<a class="txtC unit size1of4 block" id="scrollUp" href="#"><span class="button pan pls prs">Up</span></a>
+		<a class="txtC unit size1of4 block" id="scrollDown" href="#"><span class="button pan pls prs">Down</span></a>
+		<a class="txtC unit size1of4 block lastUnit" id="scrollBottom" href="#"><span class="button pan pls prs">Bottom</span></a>
+	</div>
+	}}
+</div>
+{{/study}}
+<div class="abs strip pls" id="toolbar">
+	<div id="debug" class="toolbar none"></div>
+	<div class="toolbar none txtL" id="toolDocs">
+		<a href="#" id="smallZoom" class="plm prm docTool activeTool">Small</a>
+		<a class="plm prm docTool" href="#" id="largeZoom">Large</a>
+		<a class="plm prm docTool" href="#" id="extraLargeZoom">Extra Large</a>
+	</div>
+	<div class="toolbar none txtL" id="toolImgs">
+<!--		<a class="plm prm textTool fl" href="#" id="eforms">New Procedure</a>-->
+		<a class="plm prm imageTool fl{{#is_desktop}} activeTool{{/is_desktop}}" href="#" id="imgScroll">Scroll</a>
+		<a class="plm prm imageTool fl" href="#" id="imgPan">Pan</a>
+		<a class="plm prm imageTool fl" href="#" id="imgZoom">Zoom</a>
+		<a class="plm prm imageTool fl" href="#" id="imgWindow">{{#is_desktop}}Window/Level{{/is_desktop}}{{^is_desktop}}W/L{{/is_desktop}}</a>
+		<a class="plm prm imageTool fl" href="#" id="imgAnnotate">Annotate</a>
+		<a class="plm prm imageTool fl" href="#" id="imgMeasure">Measure</a>
+		<a class="plm prm imageTool fl" href="#" id="imgROI">ROI</a>
+		<a class="plm prm imageTool fl" href="#" id="imgTemplate">Template</a>
+		{{#is_desktop}}|
+		<a class="plm prm layoutTool fl activeLayout" href="#" id="img2x2">2x2</a>
+		<a class="plm prm layoutTool fl" href="#" id="img2x1">2x1</a>
+		<a class="plm prm layoutTool fl" href="#" id="img1x2">1x2</a>
+		<a class="plm prm layoutTool fl" href="#" id="img1x1">1x1</a>
+		<a class="plm prm layoutTool fl" href="#" id="imgFull">Full</a>
+		|{{/is_desktop}}
+		<a class="plm prm textTool fl activeText" href="#" id="imgText">Text</a>
+		<a class="plm prm textTool fl" href="#" id="template">Template</a>		
+		<a class="plm prm textTool fl" href="#" id="eforms">Form</a>		
+		<a class="plm prm textTool fl activeText" href="/chat/" onclick="openWindow(this.href);this.blur();return false;">Chat</a>
+		<span class="none"><input type="checkbox" id="imgSync" name="imgSync" /><label for="imgSync"> Keep viewers in sync</label></span>
+	</div>
+</div>
+<div class="abs txtL" id="main">
+	<div id="vFull" class="pane abs pt0 pb0 full none oauto"></div>
+	<div id="vReport" class="pane abs pt0 pb0 pl0 pr0 none full"></div>
+	{{#panes}}
+	<div id="{{id}}" class="drop viewer pane abs {{top}} {{left}} {{bottom}} {{right}} {{classes}} man pan activeViewer">
+		<div class="paneHighlight layer2 opPane abs pt0 pb0 pr0 pl0 none bk5"></div>
+		<div class="wrapper ba2 full abs pt0 pb0 pr0 pl0 man pan ohidden">
+			{{#is_desktop}}<div class="abs pt0 pl0 pa2 layer9 op80">
+				<a href="#" class="none togglePanes bk4 layer9 plm prm button block">Full</a>
+				<a href="#" class="none header bk4 layer9 plm prm button block">Header</a>
+				<a href="#" class="none download bk4 layer9 plm prm button block">Download</a>
+				</div>{{/is_desktop}}
+			<div class="plm prm layer9 op80 winlev white abs pt20 button2 txtInfo{{^is_desktop}} fxs{{/is_desktop}}"></div>
+			<div class="plm prm layer9 op80 abs bk1 pr1 pt20 pb20 w15 border5 navigate none"></div>
+			<div class="abs pb0 pl0 layer9 none interactive">
+				{{! <div class="nav pa2 op80 floatl">
+					<a href="#" class="txtC full bk4 ma1 block pls prs{ { ^is_desktop} } pts pbs{ { /is_desktop} } button goPrev">‹</a>
+					<a href="#" class="txtC full bk4 ma1 block pls prs{ { ^is_desktop} } pts pbs{ { /is_desktop} } button goNext">›</a>
+				</div>}}
+				<div class="zoom pa2 op80 floatl">
+					<a href="#" class="txtC full bk4 ma1 block pas fl button1 zoomIn">+</a>
+					<a href="#" class="txtC full bk4 ma1 block pas fl button1 zoomOut">-</a>
+				</div>
+			</div>
+			<div class="scrollee abs pr0 pt20 pb20 op20 layer8 txtC w50 none">
+				<a href="#" class="full abs pt0 pl0 black fl pbm txtC goPrev layer9 bold">∧</a>
+				<a href="#" class="full abs pb0 pl0 black fl ptm txtC goNext layer9 bold">∨</a>
+				<div class="full abs pt20 layer9 pb20 bar" style="margin-top:1px;">
+					<div class="abs full bk2 iscroll fxs">&nbsp;</div>
+				</div>
+				<div class="border5 bk1 mauto h100 size1of2">&nbsp;</div>
+			</div>
+			<div class="abs pr0 w110 pa2 layer9 preset txtC none op80"><span class="bk4 man mb1 block button1">Presets</span>
+				<ul class="txtR presetCT none man">
+				<li><a href="#" class="bk4 block ma1 paxs">Bone</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Abdomen</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Lung</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Head</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">PE</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Liver</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Lung Sharp Med</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">PET WB 103</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Lung Enhance</a></li>
+				</ul>
+				<ul class="txtR fs presetMR none man">
+				<li><a href="#" class="bk4 block ma1 paxs">Head T2</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Head Flair</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Head T1</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Head MPRAGE</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Head IR</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Head Diffusion</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Head T2* eoi</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Head GE T2*</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Spine T1</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Spine T2,7ET</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Spine T2,15ET</a></li>
+				<li><a href="#" class="bk4 block ma1 paxs">Head MIP</a></li>
+				</ul>
+			</div>
+			<div class="abs pb0 pr0 w110 pa2 layer9 op80 txtC none interactive">
+				<a href="#" class="ma1 block button reset">Reset</a>
+				<a href="#" class="ma1 block button save" id="roiSave">Save</a>
+				<a href="#" class="ma1 block button load" id="roiLoad">Load</a>
+			</div>
+			<div class="abs pl0 full pb1 pl0 txtC layer2 white bk2 playback op80 man pan ml-2 none">
+				<a href="#" class="mb1 unit size1of5 button1 play mrs mls">Play</a>
+				<a href="#" class="mb1 unit size1of5 button1 rewind mrs mls">Rewind</a>
+				{{! <a href="#" class="mb1 unit size1of5 button1 slow mrs mls">Slow</a>}}
+			</div>
+			<div class="abs pl0 full pt0 pl0 txtC layer2 white bk2 seriesDescription op80 man pan ml-2 txtInfo"></div>
+			<div class="abs pl0 full pb1 pl0 txtC layer2 white bk2 totalImages op80 man pan ml-2 fl txtInfo"></div>
+			<div class="abs pb0 pr0 w50 pa2 layer9 op80 txtC none loading op80 man pan ml-2 fxs button1"></div>
+			<div class="abs pt0 full pl0 images pan man bk2 white h100 ohidden"></div>
+		</div>
+	</div>
+
+	{{/panes}}
+</div>
+
+
+<div class="none abs pt0 pl0 bk5 layer9" id="temp"></div>
+<script>
+{{{servers}}}
+</script>
+<script type="text/javascript" src="media/js2/jq.js?1"></script>
+<script type="text/javascript" src="media/js2/dnd.js?1"></script>
+<script type="text/javascript" src="media/js2/media.js?1"></script>
+<script type="text/javascript" src="media/js2/jquery.mousewheel.3.0.5.js?1"></script>
+<!--[if lt IE 9]>
+  <script src="media/js2/excanvas.js"></script>
+<![endif]-->
+<script type="text/javascript" src="media/js2/fabric.0.6.9.js?1"></script>
+<script type="text/javascript" src="media/js2/fonts/Delicious_500.font.js?1"></script>
+<script type="text/javascript" src="media/js2/wadoSession.js?1"></script>
+<script type="text/javascript" src="media/js2/wadoQueue.js?1"></script>
+<script type="text/javascript" src="media/js2/wadoViewer.js?1"></script>
+<script type="text/javascript" src="media/js2/wadoDashboard.js?1"></script>
+<script type="text/javascript" src="media/js2/wadoStudy.js?1"></script>
+<script type="text/javascript">
+		// <![CDATA[
+			function openWindow(url,width,height,options,name) {
+				width = width ? width : screen.width/2.5;
+				height = height ? height : screen.height/2.5;
+				options = options ? options : 'resizable=yes';
+				name = name ? name : 'openWindow';
+				window.open(
+					url,
+					name,
+					'screenX='+(screen.width-width)+',screenY='+(screen.height-height-50)+',width='+width+',height='+height+','+options
+				)
+			}
+		// ]]>
+		$("#back").attr("href",document.referrer);
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<div class="data spec">
+{{> search}}
+{{#patient}}
+<h2 class="h2">{{dcm_PatientName}} <span class="pale fxs">{{age}}{{#gender}} [<em>{{gender}}</em>]{{/gender}}</span></h2>
+<table>
+<thead><tr class="bgContrast">
+<th>Institution</th><th>MRN</th><th>Date of Birth</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>{{dcm_InstitutionName}}</td>
+<td>{{dcm_PatientID}}</td>
+<td>{{dcm_PatientBirthDate}}</td>
+</tbody></table>{{/patient}}
+
+{{#studies}}<h2 class="h2">{{total}} {{count}} found</h2>
+<div class="mobileTR opaque"><p class="mtn"><em>*Landscape mode is recommended for viewing all contents properly</em></p></div>
+<table>
+<thead><tr class="bgContrast">
+{{#headers}}<th class="txtC{{#class}} {{& class}}{{/class}}">
+{{#items}}{{#url}}<a href="{{& url}}" class="{{class}} inline" title="{{title}}">{{/url}}{{name}}{{#url}}</a>{{/url}}{{#separator}} - {{/separator}}{{/items}}</th>{{/headers}}
+</tr></thead>
+<tbody>{{#rows}}{{increment}}
+<tr class="{{#odd}} bgLite{{/odd}}">
+<td><a href="admin/study?site={{site}}&study_uid={{StudyInstanceUID}}" title="{{AccessionNumber}}">{{AccessionNumber}}</a></td>
+<td><a href="admin/study?site={{site}}&study_uid={{StudyInstanceUID}}" title="[{{& Modality}}] {{StudyDescription}}">[{{& Modality}}] {{StudyDescription}}</a></td><td class="txtC">{{StudyDate}}</td>
+{{#can_delete_study}}<td><a href="#">Delete</a></td>{{/can_delete_study}}</tr>
+{{/rows}}</tbody>
+</table>{{/studies}}
+
+</div>

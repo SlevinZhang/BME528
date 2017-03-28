@@ -1,0 +1,29 @@
+<?php defined('SYSPATH') or die('No direct script access.'); ?>
+
+2015-06-05 11:16:43 --- ERROR: writing
+2015-06-05 11:17:17 --- ERROR: writing
+2015-06-05 11:17:17 --- ERROR: writing
+2015-06-05 11:17:17 --- ERROR: writing
+2015-06-05 11:17:17 --- ERROR: writing
+2015-06-05 11:17:17 --- ERROR: writing
+2015-06-05 11:17:17 --- ERROR: writing
+2015-06-05 11:24:09 --- ERROR: writing
+2015-06-05 11:24:52 --- ERROR: writing
+2015-06-05 11:24:52 --- ERROR: writing
+2015-06-05 11:25:44 --- ERROR: writing
+2015-06-05 11:25:44 --- ERROR: writing
+2015-06-05 11:39:45 --- ERROR: writing
+2015-06-05 11:39:45 --- ERROR: writing
+2015-06-05 11:40:43 --- ERROR: writing
+2015-06-05 11:40:43 --- ERROR: writing
+2015-06-05 11:41:27 --- ERROR: writing
+2015-06-05 11:42:03 --- ERROR: writing
+2015-06-05 11:42:03 --- ERROR: writing
+2015-06-05 11:53:13 --- ERROR: writing
+2015-06-05 11:53:13 --- ERROR: writing
+2015-06-05 11:59:31 --- ERROR: writing
+2015-06-05 12:06:59 --- ERROR: writing
+2015-06-05 12:06:59 --- ERROR: writing
+2015-06-05 12:08:11 --- ERROR: writing
+2015-06-05 12:08:11 --- ERROR: writing
+2015-06-05 12:08:11 --- ERROR: writing

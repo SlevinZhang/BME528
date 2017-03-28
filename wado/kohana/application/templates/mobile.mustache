@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+	<title>{{title}}</title>
+	<base href="{{base}}" />
+    <meta name="viewport" content="width=100%; initial-scale=1.0; minimum-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<title>{{title}} - {{#study}}{{PatientName}}: {{StudyDescription}} [# {{AccessionNumber}}]{{/study}}</title>
+	<base href="{{base}}" />
+	<link type="text/css" href="media/css/styles.min.css" rel="stylesheet" />
+	<link type="text/css" href="media/css/wado/common.css" rel="stylesheet" />
+	<link type="text/css" href="media/css/wado/desktop.css" rel="stylesheet" />
+	<link type="text/css" href="media/css/extras.css" rel="stylesheet" />
+	<meta http-equiv="imagetoolbar" content="no" />
+</head>
+<body onload="GetNewImage(); window.top.scrollTo(0,1);">
+{{#images}}
+<div class="bgClear pts pbn">
+	<div class="leftCol">
+		<a href="admin" class="home"></a>
+		<a href="{{& patient_link}}" class="fxs">{{name}}</a> >
+		<a href="{{& study_link}}" class="fxs">Study</a>
+	</div>
+	<div class="rightCol txtR">
+		<a href="#" id="tooling" class="button fxs pan prs pls">W/L</a>
+	</div>
+</div>
+<div class="rel bk2">
+	{{#panes}}<div id="{{id}}" class="viewer pane abs {{top}} {{left}} {{bottom}} {{right}} size1of1 man pan activeViewer h100">
+		<div class="paneHighlight layer2 opPane abs pt0 pb0 pr0 pl0 none bk5"></div>
+		<div class="wrapper ba2 full abs pt0 pb0 pr0 pl0 man pan ohidden">
+			{{#can_do_full}}<div class="abs pt0 pl0 pa2 layer9 op80">
+				<a href="#" class="none togglePanes bk4 layer9 plm prm button block">Full</a>
+			</div>{{/can_do_full}}
+			<div class="plm prm layer9 op80 winlev white abs pt20 button2 txtInfo"></div>
+			<div class="abs nav pb0 pl0 pa2 layer9 none op80">
+				<a href="#" class="txtC full bk4 ma1 block pls prs fs button">Up</a>
+				<a href="#" class="txtC full bk4 ma1 block pls prs fs button">Down</a>
+			</div>
+			<div class="abs zoom pb0 pa2 layer9 none op80" style="left:60px;">
+				<a href="#" class="txtC full bk4 ma1 block pls prs fs button1">+</a>
+				<a href="#" class="txtC full bk4 ma1 block pls prs fs button1">-</a>
+			</div>
+			<div class="abs pr0 w110 pa2 layer3 preset txtC none op80"><span class="bk4 man mb1 block button1">Presets</span>
+				<ul class="txtR fs presetCT none man">
+				<li><a href="#" class="bk4 block ma1 pls prs">Bone</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Abdomen</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Lung</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Head</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">PE</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Liver</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Lung Sharp Med</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">PET WB 103</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Lung Enhance</a></li>
+				</ul>
+				<ul class="txtR fs presetMR none man">
+				<li><a href="#" class="bk4 block ma1 pls prs">Head T2</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Head Flair</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Head T1</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Head MPRAGE</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Head IR</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Head Diffusion</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Head T2* eoi</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Head GE T2*</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Spine T1</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Spine T2,7ET</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Spine T2,15ET</a></li>
+				<li><a href="#" class="bk4 block ma1 pls prs">Head MIP</a></li>
+				</ul>
+			</div>
+			<div class="abs pb0 pr0 w110 pa2 layer9 op80 txtC none interactive">
+				<a href="#" class="mb1 block button reset">Reset</a>
+			</div>
+			<div class="abs pl0 full pb1 pl0 txtC layer2 white bk2 playback op80 man pan ml-2 none">
+				<a href="#" class="mb1 unit size1of5 button1 play mrs mls">Play</a>
+				<a href="#" class="mb1 unit size1of5 button1 rewind mrs mls">Rewind</a>
+				{{ ! <a href="#" class="mb1 unit size1of5 button1 slow mrs mls">Slow</a>}}
+			</div>
+			<div class="abs pl0 full pt0 pl0 txtC layer2 white bk2 seriesDescription op80 man pan ml-2 txtInfo"></div>
+			<div class="abs pl0 full pb1 pl0 txtC layer2 white bk2 totalImages op80 man pan ml-2 fxl txtInfo"></div>
+			<div class="abs pb0 pr0 w50 pa2 layer9 op80 txtC none loading op80 man pan ml-2 fxs button1"></div>
+			<div class="abs pt0 full pl0 images pan man bk2 white h100 ohidden"></div>
+		</div>
+	</div>{{/panes}}
+{{/images}}
+{{> content}}
+<div class="none abs pt0 pl0 bk5 layer9" id="temp"></div>
+<script>
+{{{servers}}}
+</script>
+<script type="text/javascript" src="media/js2/jq.js"></script>
+<script type="text/javascript" src="media/js2/dnd.js"></script>
+<script type="text/javascript" src="media/js2/media.js"></script>
+<script type="text/javascript" src="media/js2/wheel.js"></script>
+<script type="text/javascript" src="media/js2/wadoSession.js"></script>
+<script type="text/javascript" src="media/js2/wadoQueue.js"></script>
+<script type="text/javascript" src="media/js2/wadoViewer.js"></script>
+<script type="text/javascript" src="media/js2/wadoDashboard.js"></script>
+<script type="text/javascript" src="media/js2/wadoStudy.js"></script>
+</body>
+</html>

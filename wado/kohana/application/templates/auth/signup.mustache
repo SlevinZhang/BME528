@@ -1,0 +1,80 @@
+      <div class="block" id="block-signup">
+        <h2>Sign up</h2>
+        <div class="content">
+		  {{#messages}}
+          <div class="flash">
+			{{#types}}
+            <div class="message {{type}}">
+				{{#message}}
+				  <p>{{text}}</p>
+				{{/message}}
+            </div>
+			{{/types}}
+          </div>
+		  {{/messages}}
+
+		  {{#user}}
+          <form method="POST" class="form">
+            <div class="group wat-cf">
+              <div class="left">
+                <label class="label">Username</label>
+              </div>
+              <div class="right">
+                <input type="text" class="text_field" name="user[username]" id="user_username" value="{{username}}" />
+                <span class="description">Single word, no spaces</span>
+              </div>
+            </div>
+            <div class="group wat-cf">
+              <div class="left">
+                <label class="label">First Name</label>
+              </div>
+              <div class="right">
+                <input type="text" class="text_field" name="user[first_name]" id="user_first_name" value="{{first_name}}" />
+                <span class="description"></span>
+              </div>
+            </div>
+            <div class="group wat-cf">
+              <div class="left">
+                <label class="label">Last Name</label>
+              </div>
+              <div class="right">
+                <input type="text" class="text_field" name="user[last_name]" id="user_last_name" value="{{last_name}}" />
+                <span class="description"></span>
+              </div>
+            </div>
+            <div class="group wat-cf">
+              <div class="left">
+                <label class="label">Email</label>
+              </div>
+              <div class="right">
+                <input type="text" class="text_field" name="user[email]" id="user_email" value="{{email}}" />
+                <span class="description">Ex: test@example.com</span>
+              </div>
+            </div>
+            <div class="group wat-cf">
+              <div class="left">
+                <label class="label">Password</label>
+              </div>
+              <div class="right">
+                <input type="password" class="text_field" name="user[password]" id="user_password" />
+                <span class="description">Anything you want</span>
+              </div>
+            </div>
+            <div class="group wat-cf">
+              <div class="left">
+                <label class="label">Confirm Password</label>
+              </div>
+              <div class="right">
+                <input type="password" class="text_field" name="user[confirm_password]" id="user_confirm_password" />
+                <span class="description">Must be exactly the same as Password</span>
+              </div>
+            </div>
+            <div class="group navform wat-cf">
+              <button class="button" type="submit">
+                <img src="media/icons/tick.png" alt="Save" /> Signup
+              </button>
+            </div>
+          </form>
+		  {{/user}}
+        </div>
+      </div>

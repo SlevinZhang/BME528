@@ -1,0 +1,20 @@
+				{{#items}}
+				<li class="txtC bk1 black rel drag normal">
+					<a class="block txtC {{class}}" href="{{& href}}">
+						<img class="{{image_class}}" src="{{& src}}" />
+					</a>
+					{{#is_attachment}}
+					{{text}}<br />
+					<i>{{type}}</i>
+					{{/is_attachment}}
+					{{#is_dicom}}
+					<span class="abs pt0 pl0 layer2 black bk3 pls prs fs">{{images}} Img{{^has_1_image}}s{{/has_1_image}}</span>
+					<span class="abs pb0 pl0 full txtC layer2 white bk2"><em>{{description}}</em></span>
+					<span class="abs pt0 pr0 layer2 bk3 pls prs fs">
+					{{#has_bookmarks}}<a href="{{& bookmarks_href}}">{{/has_bookmarks}}
+					<em>{{bookmarks}} Bm{{^has_1_bookmark}}s{{/has_1_bookmark}}</em>
+					{{#has_bookmarks}}</a>{{/has_bookmarks}}
+					</span>
+					{{/is_dicom}}
+				</li>
+				{{/items}}

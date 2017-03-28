@@ -1,0 +1,60 @@
+a{color:#005A9C;text-decoration:none;}
+/*a:visited{color:#005A9C;}*/
+a:hover,a:focus{text-decoration:underline;}
+/*a:visited{color:auto;}*/
+.mauto{margin:auto;}
+
+.bgDark{background:#333;color:#FFF;}
+.bgDark a{color:white;}
+.bgLite{background:#F8F8F8;}
+.bgLite a{color #4183C4;}
+.bgClear{background:#FFF;}
+/*.bgContrast{background:#CFCFCF;}*/
+.bgContrast{background:#e2e2e2;}
+.bgCallout{background: #FEFCAF;}
+
+.bbg{border-bottom:1px solid #e2e2e2;}
+
+.sortD{font-weight:bold;text-decoration:underline;padding-left:18px;background: url(../img/bullet_arrow_down.png) no-repeat left center;}
+.sortU{font-weight:bold;text-decoration:underline;padding-left:18px;background: url(../img/bullet_arrow_up.png) no-repeat left center;}
+.inline{display:inline !important;}
+.home{padding-left:18px;background: url(../img/house.png) no-repeat left center;}
+.caution{color:red;}
+.bare{color:#bbb;}
+.pale{color:#999;}
+.neutral{color:#666;}
+.opaque{color:#333;}
+.sharp{color:#000;}
+.contrast{color:#fff;}
+.firm{color:#fc6c06;}
+.positive{color:#73ab00;}
+.negative{color:#c20000;}
+
+.label{color:#666;}
+input.textField, textarea.textArea {border: 1px solid #CFCFCF;width: 99%;}
+
+.footer{border-top:1px solid black;border-bottom:1px solid black;}
+.login .h2{color:white;}
+
+.desktopTR{display:table-row;}
+.mobileTR{display:none;}
+.desktopTH{display:table-cell;}
+
+.spec .bbn{border-bottom:none;}
+.spec .btn{border-top:none;}
+.spec a{display:block;}
+
+.load{background: url(../img/1.gif) no-repeat center center;}
+.plus{background: url(../img/add.png) no-repeat center center;}
+.bold{font-weight:bold;}
+
+.data td, .data td a {text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+
+@media screen and (max-width:640px){
+/*body {-webkit-user-select: none;overflow:hidden;height:100%;}
+html{overflow:hidden;}*/
+#top{top:0;left:0;right:0;background:#D4D4D4; /*#EE3E64;*/}
+#toolbar{top:21px;left:0;right:0;background:#D7CFAA; /*#44ACCF;*/}
+#main{top:40px;left:0;right:0;bottom:0;background:#FFF;/*EBDE52;*/}
+#menuContainer{display:none;}
+}
